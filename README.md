@@ -10,7 +10,13 @@ MongoDB does not support User-Defined Functions (UDF) as most databases. "MongoD
 In this repository, we introduce two ways of deploying the function: (1) through MongoDB cli, and (2) through Java.
 
 ### Deploying through MongoDB cli
+You need to firstly enable authentication in your MongoDB. To do this, you need to create a user with admin priviliges in the Admin database. Please follow the documentations of MongoDB. When you are done, connect to MongoDB as follows:  
 
+```
+mongo --host <IP>:27017 -u <admin-user> -p --authenticationDatabase admin phe_add.js
+# when you are logged in, run:
+loadServerScripts()
+```
 
 ### Deploying through Java
 This approach is interesting for when you would like to integrate the process in the life cycle of you Java application. Unfortunately, that means you Java application needs to have privilieged access rights in MongoDB. 
