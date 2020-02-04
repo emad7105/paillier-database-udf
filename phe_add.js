@@ -1,22 +1,4 @@
 db.system.js.save(
-    {
-        _id: "echoFunction",
-        value : function(x) { return x[0].first_name; }
-    }
-);
-
-db.system.js.save(
-    {
-        _id: "add",
-        value : function(values) {
-            var result = 0;
-            for (i = 0; i < values.length; i++) result += values[i]
-            return result;
-        }
-    }
-);
-
-db.system.js.save(
    {
      _id: "he_add",
      value : function (x, y) {
