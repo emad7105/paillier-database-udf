@@ -7,7 +7,7 @@ This implementation works against the Paillier implementation in the [Javallier]
 ## How to deploy the function in MongoDB?
 MongoDB does not support User-Defined Functions (UDF) as most databases. "MongoDB does not support user defined functions (UDFs) out-of-the-box. But it allows creating and saving JavaScript functions using the db.system.js.save command. The JavaScript functions thus created can then be reused in the MapReduce functions. [[1]](https://www.infoq.com/articles/implementing-aggregation-functions-in-mongodb/)".  
 
-In this repository, we introduce two ways depoying the function: (1) Through MongoDB cli, and (2) through Java.
+In this repository, we introduce two ways of deploying the function: (1) through MongoDB cli, and (2) through Java.
 
 ### Deploying through MongoDB cli
 
