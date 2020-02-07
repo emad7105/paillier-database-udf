@@ -8,5 +8,5 @@ public interface Configs {
     int PORT = 27017;
 
     String DATABASE = "fintech";
-    String COLLECTION = "sensitive-invoices";
+    String COLLECTION = "sensitiveinvoices";
 }
