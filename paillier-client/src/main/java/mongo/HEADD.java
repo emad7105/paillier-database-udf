@@ -1,3 +1,5 @@
+package mongo;
+
 public interface HEADD {
 
     public static String heAdd = "function (x, y) {\n" +

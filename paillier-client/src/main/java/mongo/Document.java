@@ -1,3 +1,5 @@
+package mongo;
+
 import java.util.Objects;
 
 public class Document {
