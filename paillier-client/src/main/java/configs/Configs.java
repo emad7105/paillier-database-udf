@@ -15,7 +15,7 @@ public interface Configs {
 
 
     // mongo.MongoDB
-    String HOST = "192.168.104.72";
+    String HOST = "192.168.104.69";
     int PORT = 27017;
 
     String DATABASE = "fintech";
