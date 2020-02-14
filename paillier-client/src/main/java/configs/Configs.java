@@ -17,6 +17,10 @@ public interface Configs {
     // mongo.MongoDB
     String HOST = "192.168.104.69";
     int PORT = 27017;
+    Boolean MONGO_AUTH_ENABLED = false;
+    String MONGO_USER = "ansar";
+    String MONGO_PASS = "";
+    String MONGO_AUTH_DB = "admin";
 
     String DATABASE = "fintech";
     String COLLECTION = "sensitiveinvoices";

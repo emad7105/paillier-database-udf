@@ -1,10 +1,6 @@
 package mongo;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.BasicDBObjectBuilder;
-import com.mongodb.DBObject;
-import com.mongodb.MongoClient;
-import com.mongodb.client.FindIterable;
+import com.mongodb.*;
 import com.mongodb.client.MapReduceIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -30,7 +26,12 @@ import java.util.stream.Collectors;
 public class MongoDB {
 
     private MongoClient getClient() {
-        return new com.mongodb.MongoClient(Configs.HOST, Configs.PORT);
+        if (Configs.MONGO_AUTH_ENABLED) {
+            MongoCredential credential = MongoCredential.createCredential(Configs.MONGO_USER, Configs.MONGO_AUTH_DB, Configs.MONGO_PASS.toCharArray());
+            return new com.mongodb.MongoClient(new ServerAddress(Configs.HOST, Configs.PORT), credential, MongoClientOptions.builder().build());
+        } else {
+            return new com.mongodb.MongoClient(Configs.HOST, Configs.PORT);
+        }
     }
 
     public MongoCollection<BasicDBObject> getCollection() {
