@@ -1,20 +1,7 @@
-CREATE KEYSPACE facturis WITH replication = {'class': 'SimpleStrategy', 'replication_factor': '3'}  AND durable_writes = true;
-
-CREATE FUNCTION facturis.my_sin3(input varint)
-    RETURNS NULL ON NULL INPUT
-    RETURNS varint
-    LANGUAGE java
-    AS $$return input.multiply(java.math.BigInteger.valueOf(10));$$;
-
-CREATE FUNCTION facturis.my_sin2(input varint)
-    RETURNS NULL ON NULL INPUT
-    RETURNS varint
-    LANGUAGE java
-    AS $$return input;$$;
-
-CREATE TABLE facturis.invoice (
-    invoice_id int PRIMARY KEY,
+CREATE TABLE facturis.invoices (
+    invoice_id text PRIMARY KEY,
     invoice_amount varint,
+    invoice_nsquared varint,
     invoice_name text,
     invoice_status text
 ) WITH bloom_filter_fp_chance = 0.01

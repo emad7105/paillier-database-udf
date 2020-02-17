@@ -35,4 +35,17 @@ public interface Configs {
 
     String DATABASE = "fintech";
     String COLLECTION = "sensitiveinvoices";
+
+
+    /**
+     * Cassandra
+     *
+     * Port forwarding
+     * ssh -L 9042:localhost:9042 -i vms ubuntu@192.168.104.96
+     */
+
+    String CASSANDRA_NODE = "127.0.0.1";
+    Integer CASSANDRA_PORT = 9042;
+    String CASSANDRA_KEYSPACE = "facturis";
+    String CASSANDRA_TABLE = "invoices";
 }
