@@ -1,0 +1,10 @@
+INSERT INTO invoice (invoice_id, invoice_name, invoice_status, invoice_amount) VALUES(1,'Emad', 'paid', 23);
+INSERT INTO invoice (invoice_id, invoice_name, invoice_status, invoice_amount) VALUES(2,'Emad', 'paid', 10);
+INSERT INTO invoice (invoice_id, invoice_name, invoice_status, invoice_amount) VALUES(3,'Emad', 'paid', 198);
+INSERT INTO invoice (invoice_id, invoice_name, invoice_status, invoice_amount) VALUES(4,'Emad', 'paid', 1);
+INSERT INTO invoice (invoice_id, invoice_name, invoice_status, invoice_amount) VALUES(5,'Emad', 'paid', 10);
+INSERT INTO invoice (invoice_id, invoice_name, invoice_status, invoice_amount) VALUES(6,'Bert', 'paid', 100);
+INSERT INTO invoice (invoice_id, invoice_name, invoice_status, invoice_amount) VALUES(7,'Bert', 'paid', 10);
+INSERT INTO invoice (invoice_id, invoice_name, invoice_status, invoice_amount) VALUES(8,'Bert', 'paid', 100);
+INSERT INTO invoice (invoice_id, invoice_name, invoice_status, invoice_amount) VALUES(9,'Bert', 'paid', 99);
+INSERT INTO invoice (invoice_id, invoice_name, invoice_status, invoice_amount) VALUES(10,'Bert', 'paid', 109);

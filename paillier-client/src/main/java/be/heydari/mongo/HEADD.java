@@ -1,4 +1,4 @@
-package mongo;
+package be.heydari.mongo;
 
 public interface HEADD {
 

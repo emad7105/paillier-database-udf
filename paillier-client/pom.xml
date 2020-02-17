@@ -22,7 +22,7 @@
 
 
     <dependencies>
-        <!-- mongo.MongoDB -->
+        <!-- be.heydari.mongo.MongoDB -->
         <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>mongo-java-driver</artifactId>
@@ -66,5 +66,14 @@
             <artifactId>bcprov-jdk15on</artifactId>
             <version>1.57</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/junit/junit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 </project>

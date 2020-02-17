@@ -1,4 +1,4 @@
-package mongo;
+package be.heydari.mongo;
 
 import com.mongodb.*;
 import com.mongodb.client.MapReduceIterable;
@@ -7,7 +7,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Projections;
 import com.mongodb.client.model.UpdateOptions;
-import configs.Configs;
+import be.heydari.configs.Configs;
 import org.bson.BsonDocument;
 import org.bson.BsonJavaScript;
 import org.bson.Document;

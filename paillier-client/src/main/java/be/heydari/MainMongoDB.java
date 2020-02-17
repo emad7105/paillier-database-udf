@@ -1,3 +1,5 @@
+package be.heydari;
+
 import com.google.common.base.Charsets;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -6,12 +8,12 @@ import com.mongodb.client.MapReduceIterable;
 import com.mongodb.client.MongoCollection;
 import com.n1analytics.paillier.*;
 import com.sun.tools.javac.util.Assert;
-import configs.Configs;
-import crypto.Det;
-import crypto.PaillierCrypto;
-import mongo.Document;
-import mongo.MongoDB;
-import mongo.Results;
+import be.heydari.configs.Configs;
+import be.heydari.crypto.Det;
+import be.heydari.crypto.PaillierCrypto;
+import be.heydari.mongo.Document;
+import be.heydari.mongo.MongoDB;
+import be.heydari.mongo.Results;
 import org.bouncycastle.util.encoders.Hex;
 
 import javax.crypto.BadPaddingException;
@@ -35,7 +37,7 @@ import java.util.List;
  *
  * @author Emad heydari Beni
  */
-public class Main {
+public class MainMongoDB {
 
     // for printing purpose
     private static Gson GSON_SERIALIZER = new GsonBuilder().setPrettyPrinting().create();
@@ -58,8 +60,8 @@ public class Main {
     }
 
     private static void test() throws Exception {
-        // preparing crypto
-        PaillierCrypto phe = new PaillierCrypto(Configs.PAILLIER_KEY_LENGHT);
+        // preparing be.heydari.crypto
+        PaillierCrypto phe = new PaillierCrypto(Configs.JAVALIER_KEY_LENGHT);
         Det det = new Det("BC", Configs.RAND_ALG, Configs.AES_MODE,
                 Configs.AES_PADDING, Configs.AES_KEY_LENGHT, Configs.AES_IV_LENGHT);
 
@@ -80,7 +82,7 @@ public class Main {
         List<BasicDBObject> docsBert = createEncryptedDocs(10, "Bert", phe, pk, det, detKey);
 
 
-        // Insert all docs to mongo.MongoDB
+        // Insert all docs to be.heydari.mongo.MongoDB
         docsEmad.forEach(doc -> mongoDB.insert(doc, collection));
         docsAnsar.forEach(doc -> mongoDB.insert(doc, collection));
         docsBert.forEach(doc -> mongoDB.insert(doc, collection));
@@ -91,8 +93,8 @@ public class Main {
         List<String> documentIds = searchInvoices(searchName, det, detKey, mongoDB, collection);
 
         // MapReduce
-        String map = loadFunction("map.js");
-        String reduce = loadFunction("reduce.js");
+        String map = loadFunction("mongodb/map.js");
+        String reduce = loadFunction("mongodb/reduce.js");
 
         MapReduceIterable<BasicDBObject> encryptedResults = mongoDB.mapReduce(map, reduce, documentIds, collection);
         Assert.checkNonNull(encryptedResults);
@@ -110,7 +112,7 @@ public class Main {
     }
 
     private static String loadFunction(String function) throws IOException, URISyntaxException {
-        return new String(Files.readAllBytes(Paths.get(Main.class.getClassLoader().getResource(function).toURI())));
+        return new String(Files.readAllBytes(Paths.get(MainMongoDB.class.getClassLoader().getResource(function).toURI())));
     }
 
 

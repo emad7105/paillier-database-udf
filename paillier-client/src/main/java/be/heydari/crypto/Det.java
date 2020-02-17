@@ -1,4 +1,4 @@
-package crypto;
+package be.heydari.crypto;
 
 import com.google.common.primitives.Bytes;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
