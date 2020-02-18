@@ -1,5 +1,6 @@
 package be.heydari;
 
+import be.heydari.cassandra.HomSumResult;
 import be.heydari.cassandra.Cassandra;
 import be.heydari.cassandra.CassandraDocument;
 import be.heydari.configs.Configs;
@@ -8,12 +9,18 @@ import be.heydari.crypto.jpaillier.KeyPair;
 import be.heydari.crypto.jpaillier.KeyPairBuilder;
 import be.heydari.crypto.jpaillier.PublicKey;
 
+import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.querybuilder.QueryBuilder;
+import com.google.gson.Gson;
+import com.sun.tools.javac.util.Assert;
 import org.bouncycastle.util.encoders.Hex;
 
+import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,17 +45,35 @@ public class MainCassandra {
                 Configs.AES_PADDING, Configs.AES_KEY_LENGHT, Configs.AES_IV_LENGHT);
 
         // Generate Keys: Paillier
-        KeyPair paillierKeyPair = jpaillier.generateKeyPair();
+        Gson jsonMapper = new Gson();
+        KeyPair paillierKeyPair = jsonMapper.fromJson(loadKeys("cassandra/jpaillier-keys-for-test.json"), KeyPair.class);
         PublicKey pk = paillierKeyPair.getPublicKey();
         // Generate Key: DET
-        Key detKey = det.genKey();
+        Key detKey = jsonMapper.fromJson(loadKeys("cassandra/det-key-for-test.json"), SecretKeySpec.class);
 
         // encrypt + persist docs
         createEncryptedDocs(100, "Emad", pk, det, detKey, cassandra);
         createEncryptedDocs(3, "Ansar", pk, det, detKey, cassandra);
         createEncryptedDocs(10, "Bert", pk, det, detKey, cassandra);
-        System.out.println("Insertion: done!");
+        System.out.println("\nInsertion: done!\n");
 
+
+        // average
+        ResultSet rs = cassandra.getSession().execute("select homsum(invoice_amount, invoice_nsquared) as homsum from facturis.invoices");
+        Assert.checkNonNull(rs);
+
+        HomSumResult homsumResult = new HomSumResult();
+        rs.forEach(row -> homsumResult.setSum(row.getVarint("homsum")));
+        Assert.checkNonNull(homsumResult.getSum());
+
+        BigInteger decryptSum = paillierKeyPair.decrypt(homsumResult.getSum());
+
+        System.out.println("\n\n\nEncrypted Sum: "+ homsumResult.getSum());
+        System.out.println("Decrypted Sum: " + decryptSum.toString());
+    }
+
+    private static String loadKeys(String keys) throws IOException, URISyntaxException {
+        return new String(Files.readAllBytes(Paths.get(MainMongoDB.class.getClassLoader().getResource(keys).toURI())));
     }
 
     private static void createEncryptedDocs(Integer count, String invoiceName, PublicKey jpaillierPublicKey, Det det, Key detKey, Cassandra cassandra) throws Exception {
@@ -69,7 +94,8 @@ public class MainCassandra {
                     UUID.randomUUID().toString(),
                     invoiceName,
                     random.nextBoolean() ? "paid" : "unpaid",
-                    BigInteger.valueOf(random.nextLong() % 10000L)
+                    //BigInteger.valueOf(random.nextLong() % 10000L)
+                    BigInteger.valueOf(10L)
             );
 
             BigInteger encryptedAmount = jpaillierPublicKey.encrypt(encryptedCassandraDocument.getInvoiceAmount());

@@ -23,7 +23,11 @@ public class Cassandra {
         String cqlDrop = loadCQL("cassandra/facturis-drop.cql");
         String cqlCreateKS = loadCQL("cassandra/facturis-create-keyspace.cql");
         String cqlCreateTable = loadCQL("cassandra/facturis-create-table.cql");
-        String cqlCreateUDF = loadCQL("cassandra/facturis-create-udf.cql");
+        String cqlCreateTableIndex = loadCQL("cassandra/facturis-create-table-index.cql");
+
+        String cqlCreateUDFState = loadCQL("cassandra/facturis-create-udf-sum-state.cql");
+        String cqlCreateUDFFinal = loadCQL("cassandra/facturis-create-udf-sum-final.cql");
+        String cqlCreateUDFAgg = loadCQL("cassandra/facturis-create-udf-sum-agg.cql");
 
         System.out.println("\n\n\nDropping Keyspace...\n\n\n");
         connector.getSession().execute(cqlDrop);
@@ -33,9 +37,12 @@ public class Cassandra {
 
         System.out.println("\n\n\nCreating Table...\n\n\n");
         connector.getSession().execute(cqlCreateTable);
+        connector.getSession().execute(cqlCreateTableIndex);
 
         System.out.println("\n\n\nCreating User-defined functions...\n\n\n");
-        connector.getSession().execute(cqlCreateUDF);
+        connector.getSession().execute(cqlCreateUDFState);
+        connector.getSession().execute(cqlCreateUDFFinal);
+        connector.getSession().execute(cqlCreateUDFAgg);
     }
 
 
