@@ -42,7 +42,7 @@ public class MainCassandra {
         Cassandra cassandra = new Cassandra();
 
         // drop, create keyspace, create table and create UDFs
-        /cleanupLoadEverything(cassandra);
+        cleanupLoadEverything(cassandra);
         test(cassandra);
     }
 
