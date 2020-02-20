@@ -29,3 +29,10 @@ pip install cassandra-driver
 # add this to your env (e.g. in .bashrc)
 export CQLSH_NO_BUNDLED=true
 ```
+
+
+Forward ports:  
+
+```
+ssh ubuntu@192.168.104.96 -i vms -L 9042:localhost:9042
+```
